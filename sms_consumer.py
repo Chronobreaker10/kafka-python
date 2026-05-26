@@ -20,7 +20,7 @@ async def process_message():
             try:
                 print(f"#{message.offset} получено уведомление: {message.value.decode("utf-8")}")
                 await asyncio.sleep(0.5)
-                print(1 / 0)
+                # print(1 / 0)
                 await sms_consumer.commit()
                 print(f"Уведомление {message.value.decode("utf-8")} отправлено по SMS!")
             except CommitFailedError:
