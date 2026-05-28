@@ -2,6 +2,8 @@ import asyncio
 
 from aiokafka import AIOKafkaConsumer
 
+from schemas import Event
+
 
 async def process_message():
     common_consumer = AIOKafkaConsumer(
@@ -16,7 +18,12 @@ async def process_message():
     try:
         # common_consumer.subscribe(pattern=r'^events.*') подпишемся на все топики, начинающиеся c events
         async for message in common_consumer:
-            print(f"#{message.offset} получено сообщение: {message.value.decode("utf-8")}, topic: {message.topic}")
+            if message.topic == "notifications":
+                print(f"#{message.offset} получено сообщение: {message.value.decode("utf-8")}, topic: {message.topic}")
+            elif message.topic == "events":
+                data = message.value.decode("utf-8")
+                event = Event.model_validate_json(data)
+                print(event)
     finally:
         await common_consumer.stop()
 
