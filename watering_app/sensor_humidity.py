@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 async def send_humidity():
-    producer = AIOKafkaProducer(bootstrap_servers='localhost:9092')
+    producer = AIOKafkaProducer(bootstrap_servers='localhost:9092', request_timeout_ms=5000)
     await producer.start()
     sensor_id = 1
 

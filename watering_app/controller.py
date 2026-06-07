@@ -3,7 +3,6 @@ from datetime import datetime, timezone
 
 from aiokafka import AIOKafkaConsumer
 
-from schemas import Event
 from watering_app.config import SENSOR_TOPIC_NAME
 from watering_app.models import SensorReading
 

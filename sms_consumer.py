@@ -26,12 +26,12 @@ async def process_message():
             except CommitFailedError:
                 logger.error("Commit failed: partition revoked. Giving up.")
                 break
-            except KafkaError as e:
-                logger.error(f"Kafka error: {e}")
             except Exception as e:
                 logger.error(f"Internal Error: {e}")
                 # await send_to_dlq(msg, topic='my_dlq_topic')
                 # await sms_consumer.commit()
+    except KafkaError as e:
+        logger.error(f"Kafka error: {e}")
     finally:
         await sms_consumer.stop()
 
